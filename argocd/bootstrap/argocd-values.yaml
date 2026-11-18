@@ -1,0 +1,12 @@
+configs:
+  params:
+    server.insecure: false
+
+controller:
+  metrics:
+    enabled: true
+
+server:
+  replicas: 1
+  service:
+    type: ClusterIP

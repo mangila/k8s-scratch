@@ -1,0 +1,13 @@
+[tools]
+python = "3.15.0"
+argocd = "3.6.1"
+helm = "4.3.2"
+minikube = "1.39.0"
+kustomize = "5.8.3"
+
+[env]
+_.python.venv = { path = ".venv", create = true }
+
+[tasks.commit]
+description = "Add all, amend commit and force push"
+run = "git add . && git commit --amend -m \"chore(k8s): add stuffs\" && git push --force-with-lease"

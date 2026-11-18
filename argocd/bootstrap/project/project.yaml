@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: k8s-scratch
+  namespace: argocd
+spec:
+  description: Core cluster components and Argo CD apps from k8s-scratch
+  sourceRepos:
+    - https://github.com/mangila/k8s-scratch
+    - https://argoproj.github.io/argo-helm
+    - ghcr.io/argoproj/argo-helm
+  destinations:
+    - server: https://kubernetes.default.svc
+      namespace: argocd
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'

@@ -1,0 +1,41 @@
+[tasks.argocd-bootstrap]
+description = "Bootstrap ArgoCD"
+run = """
+echo "==> Minikube status"
+minikube status
+echo "==> Applying ArgoCD manifests via server-side apply..."
+kustomize build --enable-helm bootstrap | minikube kubectl -- apply --server-side --force-conflicts -f -
+
+echo "==> Waiting for ArgoCD server deployment..."
+minikube kubectl -- -n argocd rollout status deployment/argocd-server --timeout=300s
+minikube kubectl -- -n argocd rollout status deployment/argocd-repo-server --timeout=300s
+"""
+
+[tasks.argocd]
+description = "Apply Applications and expose ArgoCD UI"
+run = """
+echo "==> Minikube status"
+minikube status
+
+echo "==> Apply ArgoCD Project and Apps of Apps"
+kustomize build bootstrap/project | minikube kubectl -- apply --server-side --force-conflicts -f -
+
+echo "==> Apply ArgoCD Applications"
+kustomize build apps | minikube kubectl -- apply -f -
+
+echo "==> Retrieving initial admin password..."
+argocd admin initial-password -n argocd
+echo ""
+
+echo "==> Exposing ArgoCD UI to localhost"
+minikube service argocd-server -n argocd
+"""
+
+[tasks.argocd-clean]
+description = "Remove ArgoCD workloads and namespace"
+run = """
+echo "==> Deleting ArgoCD application workloads and core manifests..."
+kustomize build --enable-helm apps | minikube kubectl -- delete --ignore-not-found=true -f -
+kustomize build --enable-helm bootstrap/project | minikube kubectl -- delete --ignore-not-found=true -f -
+kustomize build --enable-helm bootstrap | minikube kubectl -- delete --ignore-not-found=true -f -
+"""
