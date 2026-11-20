@@ -3,9 +3,17 @@ kind: Kustomization
 
 namespace: argocd
 
+labels:
+  - pairs:
+      app.kubernetes.io/instance: argocd
+      app.kubernetes.io/name: argocd
+      app.kubernetes.io/part-of: argocd
+
 resources:
   - namespace.yaml
 
+# Chicken-and-egg problem.
+# ArgoCD needs to be installed before we can install the ArgoCD application
 helmCharts:
   - name: argo-cd
     repo: oci://ghcr.io/argoproj/argo-helm

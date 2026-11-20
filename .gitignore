@@ -56,5 +56,6 @@ env.bak/
 Thumbs.db
 
 ### Local ###
+lint.yaml
 megalinter-reports/
 charts
