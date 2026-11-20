@@ -8,6 +8,10 @@ kustomize = "5.8.3"
 [env]
 _.python.venv = { path = ".venv", create = true }
 
-[tasks.commit]
+[tasks.commit-force]
 description = "Add all, amend commit and force push"
 run = "git add . && git commit --amend -m \"chore(k8s): add stuffs\" && git push --force-with-lease"
+
+[tasks.commit]
+description = "Add all, amend commit and force push"
+run = "git add . && git commit -m \"chore(k8s): add stuffs\" && git push"
