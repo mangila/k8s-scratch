@@ -6,12 +6,12 @@ metadata:
 spec:
   description: Core cluster components and Argo CD apps from k8s-scratch
   sourceRepos:
-    - https://github.com/mangila/k8s-scratch
+    - https://github.com/mangila/*.git
     - https://argoproj.github.io/argo-helm
     - ghcr.io/argoproj/argo-helm
   destinations:
     - server: https://kubernetes.default.svc
       namespace: argocd
   clusterResourceWhitelist:
-    - group: '*'
-      kind: '*'
+    - group: "*"
+      kind: "*"

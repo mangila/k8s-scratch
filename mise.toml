@@ -11,3 +11,8 @@ _.python.venv = { path = ".venv", create = true }
 [tasks.commit]
 description = "Add all, amend commit and force push"
 run = "git add . && git commit --amend -m \"chore(k8s): add stuffs\" && git push --force-with-lease"
+
+[tasks.megalint]
+raw = true
+description = "Megalint with Golang flavor"
+run = "podman run --rm -v $(pwd):/tmp/lint:rw ghcr.io/oxsecurity/megalinter-go"

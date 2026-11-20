@@ -20,9 +20,6 @@ run = """
 echo "==> Minikube status"
 minikube status
 
-echo "==> Apply ArgoCD Applications"
-kustomize build apps | minikube kubectl -- apply -f -
-
 echo "==> Retrieving initial admin password..."
 argocd admin initial-password -n argocd
 echo ""
